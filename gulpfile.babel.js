@@ -4,15 +4,25 @@ var gulp = require('gulp'),
   livereload = require('gulp-livereload'),
   sass = require('gulp-ruby-sass'),
   sourceMaps = require('gulp-sourcemaps'),
-  babel = require('gulp-babel');
+  babel = require('gulp-babel'),
+  concat = require('gulp-concat'),
+  uglify = require('gulp-uglify'),
+  rename = require('gulp-rename');
 
-gulp.task('sass', function () {
+const vendor_folder = './public/components/';
+
+const vendor_js = [
+    vendor_folder + 'jquery/dist/jquery.min.js',
+    vendor_folder + 'bootstrap-sass/assets/javascripts/bootstrap.min.js'
+];
+
+gulp.task('sass', () => {
   return sass('./public/css/')
     .pipe(gulp.dest('./public/css'))
     .pipe(livereload());
 });
 
-gulp.task('js', function() {
+gulp.task('js', () => {
     return gulp.src("src/**/*.js") //get all js files under the src
         .pipe(sourceMaps.init()) //initialize source mapping
         .pipe(babel()) //transpile
@@ -20,17 +30,27 @@ gulp.task('js', function() {
         .pipe(gulp.dest("dist")); //pipe to the destination folder
 });
 
-gulp.task('views', function() {
+gulp.task('views', () => {
     return gulp.src("src/app/views/**")
         .pipe(gulp.dest('dist/app/views'));
 });
 
-gulp.task('watch', function() {
+gulp.task('vendor', () => {
+    return gulp.src(vendor_js)
+        .pipe(concat('vendor.js'))
+        .pipe(gulp.dest('./public/js'))
+        .pipe(rename('vendor.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('./public/js'));
+});
+
+
+gulp.task('watch', () => {
   gulp.watch('./public/css/*.scss', ['sass']);
   gulp.watch('./src/**/*.js', ['js']);
 });
 
-gulp.task('develop', ['js', 'sass', 'views'], function () {
+gulp.task('develop', ['js', 'sass', 'views'], () => {
   livereload.listen();
   nodemon({
     script: 'dist/app.js',
