@@ -1,10 +1,10 @@
 export default class Placeholder {
   constructor(size, hex = null, text = null) {
     let sizes = size.split('x');
-    this.width = sizes[0] + 'px';
-    this.height = sizes[1] + 'px';
+    this.width = sizes[0];
+    this.height = sizes[1];
     this.colour = '#' + hex;
-    this.textColour = '#' + this.lightenColour(50);
+    this.textColour = '#' + this.lightenColour(20);
     this.text = text;
   }
   lightenColour(percent) {

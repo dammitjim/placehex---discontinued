@@ -4,3 +4,5 @@ public/components
 dist/
 public/js/vendor.js
 public/js/vendor.min.js
+public/img/output
+.DS_Store
