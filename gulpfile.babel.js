@@ -48,6 +48,8 @@ gulp.task('vendor', () => {
 gulp.task('watch', () => {
   gulp.watch('./public/css/*.scss', ['sass']);
   gulp.watch('./src/**/*.js', ['js']);
+  gulp.watch('./src/views/**/*.handlebars', ['views']);
+  gulp.watch('./src/views/*.handlebars', ['views']);
 });
 
 gulp.task('develop', ['js', 'sass', 'views'], () => {

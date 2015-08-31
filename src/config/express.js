@@ -35,9 +35,12 @@ module.exports = function(app, config) {
   app.use(methodOverride());
 
   var controllers = glob.sync(config.root + '/app/controllers/*.js');
-  console.log(controllers);
   controllers.forEach(function (controller) {
     require(controller)(app);
+  });
+  var libs = glob.sync(config.root + '/app/lib/*.js');
+  libs.forEach((lib) => {
+    require(lib);
   });
 
   app.use(function (req, res, next) {

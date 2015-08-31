@@ -1,6 +1,11 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+  padding: 0px;
+  margin: 0px; }
 
-a {
-  color: #00B7FF; }
+.placehold {
+  display: table; }
+  .placehold span {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    color: white; }
