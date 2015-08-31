@@ -1,0 +1,56 @@
+var gulp = require('gulp'),
+  nodemon = require('gulp-nodemon'),
+  plumber = require('gulp-plumber'),
+  livereload = require('gulp-livereload'),
+  sass = require('gulp-ruby-sass'),
+  sourceMaps = require('gulp-sourcemaps'),
+  babel = require('gulp-babel');
+
+gulp.task('sass', function () {
+  return sass('./public/css/')
+    .pipe(gulp.dest('./public/css'))
+    .pipe(livereload());
+});
+
+gulp.task('js', function() {
+    return gulp.src("src/**/*.js") //get all js files under the src
+        .pipe(sourceMaps.init()) //initialize source mapping
+        .pipe(babel()) //transpile
+        .pipe(sourceMaps.write(".")) //write source maps
+        .pipe(gulp.dest("dist")); //pipe to the destination folder
+});
+
+gulp.task('views', function() {
+    return gulp.src("src/app/views/**")
+        .pipe(gulp.dest('dist/app/views'));
+});
+
+gulp.task('watch', function() {
+  gulp.watch('./public/css/*.scss', ['sass']);
+  gulp.watch('./src/**/*.js', ['js']);
+});
+
+gulp.task('develop', ['js', 'sass', 'views'], function () {
+  livereload.listen();
+  nodemon({
+    script: 'dist/app.js',
+    ext: 'js coffee handlebars',
+    stdout: false
+  }).on('readable', function () {
+    this.stdout.on('data', function (chunk) {
+      if(/^Express server listening on port/.test(chunk)){
+        livereload.changed(__dirname);
+      }
+    });
+    this.stdout.pipe(process.stdout);
+    this.stderr.pipe(process.stderr);
+  });
+});
+
+gulp.task('default', [
+  'sass',
+  'js',
+  'views',
+  'develop',
+  'watch'
+]);
