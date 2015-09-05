@@ -31,11 +31,11 @@ gulp.task('js', () => {
 });
 
 gulp.task('views', () => {
-    return gulp.src("src/app/views/**")
+    return gulp.src("src/app/views/**/*.handlebars")
         .pipe(gulp.dest('dist/app/views'));
 });
 
-gulp.task('vendor', () => {
+gulp.task('vendor_js', () => {
     return gulp.src(vendor_js)
         .pipe(concat('vendor.js'))
         .pipe(gulp.dest('./public/js'))
@@ -44,12 +44,11 @@ gulp.task('vendor', () => {
         .pipe(gulp.dest('./public/js'));
 });
 
-
 gulp.task('watch', () => {
   gulp.watch('./public/css/*.scss', ['sass']);
   gulp.watch('./src/**/*.js', ['js']);
-  gulp.watch('./src/views/**/*.handlebars', ['views']);
-  gulp.watch('./src/views/*.handlebars', ['views']);
+  gulp.watch('./src/**/*.handlebars', ['views']);
+  gulp.watch('./src/*.handlebars', ['views']);
 });
 
 gulp.task('develop', ['js', 'sass', 'views'], () => {
@@ -72,6 +71,7 @@ gulp.task('develop', ['js', 'sass', 'views'], () => {
 gulp.task('default', [
   'sass',
   'js',
+  'vendor_js',
   'views',
   'develop',
   'watch'

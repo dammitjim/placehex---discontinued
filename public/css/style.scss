@@ -1,7 +1,4 @@
-body {
-  padding: 0px;
-  margin: 0px;
-}
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap";
 
 .placehold {
   display: table;
@@ -11,4 +8,8 @@ body {
     text-align: center;
     color: white;
   }
+}
+
+body {
+  font-family: 'Lato', sans-serif;
 }
