@@ -5,4 +5,5 @@ dist/
 public/js/vendor.js
 public/js/vendor.min.js
 public/img/output
+public/css
 .DS_Store
