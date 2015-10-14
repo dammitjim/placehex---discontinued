@@ -2,6 +2,7 @@ let path = require('path');
 
 export default class Placeholder {
 
+  // construct
   constructor(size, hex = null, text = null) {
     let sizes = size.split('x');
     this.width = sizes[0];
@@ -27,10 +28,18 @@ export default class Placeholder {
     return (yiq >= 128) ? '000000' : 'ffffff';
   }
 
+  /**
+   * Calculates and returns the filename
+   * @return string
+   */
   getFilename() {
     return [this.width + 'x' + this.height, this.colour, Date.now()].join('_') + '.png';
   }
 
+  /**
+   * Calculates and returns the filepath
+   * @return string
+   */
   getFilepath() {
     return path.normalize(__dirname + '/../../..') + '/public/img/output/' + this.getFilename();
   }

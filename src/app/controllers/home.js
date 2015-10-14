@@ -35,14 +35,27 @@ function generateOutput(generator, args, callback) {
   });
 }
 
+/**
+ * Returns a random number between 1 and the limite
+ * @param  int limit
+ * @return int
+ */
 function randomNumber(limit = 999) {
   return Math.ceil(Math.random()*limit);
 }
 
+/**
+ * Returns a random hexidecimal colour code
+ * @return string
+ */
 function randomHex() {
   return Math.floor(Math.random()*16777215).toString(16);
 }
 
+/**
+ * Debug function for testing that it works
+ * @return String
+ */
 function generateRandomURL() {
   let size = randomNumber() + 'x' + randomNumber();
   let colour = randomHex();
@@ -50,12 +63,18 @@ function generateRandomURL() {
   return [size, colour, text].join('/');
 }
 
+/**
+ * Test everything works
+ */
 router.get('/', (req, res, next) => {
   let args = [];
   args.url = generateRandomURL();
   res.render('index', args);
 });
 
+/**
+ * Specify size, hexidecimal color and text
+ */
 router.get('/:size/:hex/:text', (req, res, next) => {
   let args = req.params;
   let generator = new Generator(args.size, args.hex, args.text);
@@ -69,6 +88,9 @@ router.get('/:size/:hex/:text', (req, res, next) => {
   });
 });
 
+/**
+ * Specify size and hexidecimal colour
+ */
 router.get('/:size/:hex', (req, res, next) => {
   let args = req.params;
   let generator = new Generator(args.size, args.hex);
@@ -82,6 +104,9 @@ router.get('/:size/:hex', (req, res, next) => {
   });
 });
 
+/**
+ * Only specify size
+ */
 router.get('/:size', (req, res, next) => {
   let args = req.params;
   let generator = new Generator(args.size);
